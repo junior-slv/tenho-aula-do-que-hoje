@@ -1,64 +1,80 @@
-import React from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import React from 'react';
 
-export type Props = {
-  name: string;
-  baseEnthusiasmLevel?: number;
-};
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  SectionList,
+  StatusBar,
+} from 'react-native';
 
-const Hello: React.FC<Props> = ({ name, baseEnthusiasmLevel = 0 }) => {
-  const [enthusiasmLevel, setEnthusiasmLevel] =
-    React.useState(baseEnthusiasmLevel);
+const DATA = [
+  {
+    title: 'Segunda',
+    data: ['Algoritmos e Estrutura de Dados: Árvores - Prof: Marc Antonio Vieira de Queiroz', 'Arquitetura e Organização de Computadores - Prof: Kleber Marcio de Souza'],
+  },
+  {
+    title: 'Terça',
+    data: ['LPOO: Introdução a Programação Orientada a Objetos - Prof: Ricardo Petri', 'Análise e Projeto de Algoritmos - Prof: Edison Antonio Sahd Filho'],
+  },
+  {
+    title: 'Quarta',
+    data: ['LPOO: Introdução a Programação Orientada a Objetos - Prof: Ricardo Petri', 'Arquitetura e Organização de Computadores - Prof: Kleber Marcio de Souza'],
+  },
+  {
+    title: 'Quinta',
+    data: ['Algoritmos e Estrutura de Dados: Árvores - Prof: Marc Antonio Vieira de Queiroz', '@Teste de Software: Fundamentos de Teste de Software - Prof: Edison Antonio Sahd Filho'],
+  },
+  {
+    title: 'Sexta',
+    data: ['APA: Recursividade e Funções Recursivas - Prof: Ricardo Petri ', 'Projeto Interdisciplinar II - Prof: Bruna Sozzo'],
+  },
+];
 
-  const onIncrement = () => setEnthusiasmLevel(enthusiasmLevel + 1);
-  const onDecrement = () =>
-    setEnthusiasmLevel(enthusiasmLevel > 0 ? enthusiasmLevel - 1 : 0);
-
-
-  return (
-    <View style={styles.container}>
-            <Image
-        style={styles.tinyLogo}
-        src={'https://raichu-uploads.s3.amazonaws.com/logo_unifil-centro-universitario-filadelfia_bduUsl.png'}
-      />
-      <Text style={styles.greeting}>
-
-        Tenho aula do que hoje?
+const App = () => (
+  <SafeAreaView style={styles.container}>
+    <View>
+      <Text style={styles.header}>
+        Tem aula do que hoje?
       </Text>
-      <View style={styles.boxStyle}>
-        <Button
-          title="Avançar >"
-          accessibilityLabel="avancar"
-          onPress={onIncrement}
-          color="blue"
-        />
-      </View>
+      <Text style={styles.header}>
+      CUBO Mista 2o ano
+      </Text>
     </View>
-  );
-};
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({item}) => (
+        <View style={styles.item}>
+          <Text style={styles.title}>{item}</Text>
+        </View>
+      )}
+      renderSectionHeader={({section: {title}}) => (
+        <Text style={styles.header}>{title}</Text>
+      )}
+    />
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "orange",
-    justifyContent: "center",
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16,
   },
-  greeting: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 16,
+  item: {
+    backgroundColor: 'orange',
+    padding: 20,
+    marginVertical: 8,
   },
-  tinyLogo: {
-    width: 100,
-    height: 100,
+  header: {
+    fontSize: 32,
+    backgroundColor: '#fff',
   },
-  boxStyle: {
-    backgroundColor: "white",
-    borderRadius: 15,
-    padding: 10,
+  title: {
+    fontSize: 24,
   },
 });
 
-export default Hello;
+export default App;
