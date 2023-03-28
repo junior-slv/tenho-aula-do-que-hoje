@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   SectionList,
   StatusBar,
+  Button,
 } from 'react-native';
 
 const DATA = [
@@ -32,49 +33,74 @@ const DATA = [
   },
 ];
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <View>
-      <Text style={styles.header}>
-        Tem aula do que hoje?
-      </Text>
-      <Text style={styles.header}>
-      CUBO Mista 2o ano
-      </Text>
-    </View>
-    <SectionList
-      sections={DATA}
-      keyExtractor={(item, index) => item + index}
-      renderItem={({item}) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{item}</Text>
-        </View>
-      )}
-      renderSectionHeader={({section: {title}}) => (
-        <Text style={styles.header}>{title}</Text>
-      )}
-    />
-  </SafeAreaView>
-);
-
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     marginHorizontal: 16,
+    alignItems: "center",
   },
   item: {
     backgroundColor: 'orange',
-    padding: 20,
+    borderRadius: 30,
+    padding: 15,
+    marginVertical: 8,
+  },
+  itemNone: {
+    display: "none",
+    backgroundColor: 'orange',
+    borderRadius: 30,
+    padding: 15,
     marginVertical: 8,
   },
   header: {
-    fontSize: 32,
+    fontSize: 30,
+    backgroundColor: '#fff',
+  },
+  headerNone: {
+    display: "none",
+    fontSize: 30,
     backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
   },
 });
+
+
+
+const App = () => {
+  const [toggle, settoggle] = useState(false)
+  const changeGrade = () => {
+    settoggle(!toggle)
+
+  }
+  return (  
+  <SafeAreaView style={styles.container}>
+      <Text style={styles.header}>
+        Tem aula do que hoje?
+      </Text>
+    <View> 
+      <Button title= "CUBO Mista 2o ano" onPress={changeGrade}/>
+
+      
+
+    </View>
+    <SectionList
+      sections={DATA}
+      keyExtractor={(item, index) => item + index}
+      renderItem={({item}) => (
+        <View style={toggle ? styles.item : styles.itemNone}>
+          <Text style={styles.title}>{item}</Text>
+        </View>
+      )}
+      renderSectionHeader={({section: {title}}) => (
+        <Text style={toggle ? styles.header : styles.headerNone}>{title}</Text>
+      )}
+    />
+  </SafeAreaView>
+);
+}
+
 
 export default App;
